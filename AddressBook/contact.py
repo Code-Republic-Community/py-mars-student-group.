@@ -100,6 +100,14 @@ class Contact:
         self.birthday = birthday
         
         
+    def to_json(self):
+        
+        return {
+            "name": self.name,
+            "phone_number": self.phone_number,
+            "email_address": self.email_address,
+            "birthday": self.birthday
+        }
         
         
 
