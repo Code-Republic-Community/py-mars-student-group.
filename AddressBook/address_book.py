@@ -17,16 +17,11 @@ class Address_Book:
         """
         
         new_contact = Contact(name,phone_number,email_address,birthday)
-        if  new_contact.phone_number not in self.contacts:
         
-            self.contacts[new_contact.phone_number] = new_contact
-            print("contact added")
+        self.contacts[new_contact.phone_number] = new_contact
+        print("Contact added")
         
-        else:
-            print("the contact already exists")
-        
-
-        
+    
     def dell_contact(self,contact):
         if contact is None:
             print("the contact does not exist")
@@ -37,46 +32,58 @@ class Address_Book:
         
     
         
-    def search_contact(self,type_parametr,parametr = None):
-        if type_parametr.lower() == "name":
-            found_parameters = []
-            for i in self.contacts:
-                if self.contacts[i].name == parametr:
-                    found_parameters.append(self.contacts[i])
-            return found_parameters                
+    def search_contact(self,type_parametr,parametr):
+        if type_parametr == "name":
+            found_contacts = []
+            for i in self.contacts.values():
+                if i.name == parametr:
+                    found_contacts.append(i)
             
-        elif type_parametr.lower() == "phone_number":
+            if len(found_contacts) == 0:
+                return None
+            else:
+                return found_contacts
+            
+                                
+            
+        elif type_parametr == "phone_number":
             phone_numbers = []
             for i in self.contacts:
                 phone_numbers.append(self.contacts[i].phone_number)
             
             found_parameters = parameter_search(phone_numbers)
             if len(found_parameters) == 0:
-                print("parameters not found")
+                return None
             else:
-                return self.contacts[found_parameters[0]]
+                return found_parameters[0]
             
             
-        elif type_parametr.lower() == "email_address":
+        elif type_parametr == "email_address":
             email_addreses = []
             for i in self.contacts:
                 email_addreses.append(self.contacts[i].email_address)
             
             found_parameters = parameter_search(email_addreses)
             if len(found_parameters) == 0:
-                print("parameters not found")
+                return None
             else:
-                for i in self.contacts:
-                    if self.add_contact[i].email_address == found_parameters[0]:
-                        return self.contacts[i]
+                for i in self.contacts.values():
+                    if i.email_address == found_parameters[0]:
+                        return i
                 
+            
+        
         
         elif type_parametr == "birthday":
-            found_parameters = []
-            for i in self.contacts:
-                if self.contacts[i].birthday == parametr:
-                    found_parameters.append(self.contacts[i])
-            return found_parameters
+            found_contacts = []
+            for i in self.contacts.values():
+                if i.birthday == parametr:
+                    found_contacts.append(i)
+            
+            if len(found_contacts) == 0:
+                return None
+            else:
+                return found_contacts
         
         
     def update_contact(self,contact,update_parametr_type,update_parametr):
@@ -99,6 +106,3 @@ class Address_Book:
             
             print(f"parametr  - {self.contacts[contact.phone_number].birthday} - update  -{update_parametr}")
             self.contacts[contact.phone_number].birthday = update_parametr
-        
-    
-

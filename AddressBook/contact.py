@@ -110,9 +110,6 @@ class Contact:
         }
         
         
-
-bob  = Contact("Bob","098569205","bob@mail.ru","30-06-2001")
-
-
-
+    def __str__(self) -> str:
+        return f"Name - {self.name}, phone_number - {self.phone_number}, email_address - {self.email_address}, birthday -{self.birthday}"
 
