@@ -1,5 +1,7 @@
 import unittest
-from AddressBook.address_book.address_book import Contact
+import sys
+sys.path.append('/Users/jon/Workspace/py-mars-student-group/AddressBook')
+from address_book.address_book import Contact
 from datetime import datetime
 from re import match
 

@@ -3,6 +3,12 @@ from re import match
 from .contact import Contact
 from typing import List
 
+# Descriptor class Validator 
+
+
+class StringValidator:
+    def __set__(self, value:str)-> None:
+        pass
 
 class AddressBook:
     """
@@ -30,6 +36,7 @@ class AddressBook:
         """
     def __init__(self):
         self.contacts: List[Contact] = []
+        # Searchin in list is big O(n)
 
     def add_contact(self) -> None:
         """

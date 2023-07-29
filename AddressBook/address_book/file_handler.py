@@ -1,6 +1,6 @@
 import json
 from .contact import Contact
-
+import os
 
 class FileHandler:
     """
@@ -23,7 +23,7 @@ class FileHandler:
             are represented as lists of contact details, including first name, middle name, last name, birthday, telephone
             number, and email. The serialized data is written to the file specified by the path "data/address_book_data.json".
         """
-        with open(r"data\address_book_data.json", "w") as f:
+        with open(r"data/address_book_data.json", "w") as f:
             json.dump([
                 [contact.first_name,
                  contact.middle_name,
@@ -46,10 +46,13 @@ class FileHandler:
             last name, birthday, telephone number, and email. The method deserializes the data and creates Contact objects
             using the contact details. These Contact objects are then added to the provided AddressBook object.
         """
-        with open(r"data\address_book_data.json", "r") as f:
-            data = json.load(f)
-            for contact_info in data:
-                my_address_book.contacts.append(Contact(*contact_info))
+        with open(r"data/address_book_data.json", "r") as f:
+            if f.read(0) != '':
+                f.seek(0)  # it may be redundant but it does not hurt
+                data = json.load(f)
+            
+                for contact_info in data:
+                    my_address_book.contacts.append(Contact(*contact_info))
 
 
 

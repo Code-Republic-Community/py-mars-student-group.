@@ -1,10 +1,12 @@
-from address_book.address_book import AddressBook
-from address_book.file_handler import FileHandler
+# from address_book.address_book import AddressBook
+# from address_book.file_handler import FileHandler
+import address_book.address_book as ab
+import address_book.file_handler as f
 import json
 
 def main():
-    my_address_book = AddressBook()
-    file_handler = FileHandler()
+    my_address_book = ab.AddressBook()
+    file_handler = f.FileHandler()
     file_handler.load_address_book(my_address_book)
     while True:
         action = input("Enter 1 to add contact, 2 to search contact, 3 to delete contact, "
