@@ -2,7 +2,6 @@ from address_book.address_book import AddressBook
 from address_book.file_handler import FileHandler
 import json
 
-
 def main():
     my_address_book = AddressBook()
     file_handler = FileHandler()

@@ -5,39 +5,70 @@ from typing import List
 
 
 class AddressBook:
+    """
+        The AddressBook class represents a simple address book application.
+        The address book stores a list of contacts, each contact is represented by the Contact class.
+        It provides various methods to interact with the contact: add, search, update, and delete contacts.
+
+        Attributes:
+            contacts (List[Contact]): A list containing the Contact objects representing the contacts in the address
+            book.
+
+        Methods:
+            add_contact(): Adds a new contact to the address book based on user input.
+            search_contact(): Searches for a contact based on the user's search criteria (name, telephone number,
+            email, or birthday).
+            delete_contact(): Deletes a contact from the address book based on the user's input (telephone number
+            or email address).
+            update_contact(): Updates a contact's telephone number or email address based on the user's input.
+            valid_tel_number(tel_number: str) -> bool: Validates the telephone number format for Armenian numbers.
+            valid_email(email: str) -> bool: Validates the email address using a regular expression pattern.
+            valid_name(name: str) -> bool: Validates the name to include only letters, spaces, and hyphens with a
+            minimum length of 2 characters.
+            convert_date_format(input_date: str) -> str: Converts the date format from DD.MM.YY to DD.b.YYYY
+            (e.g., 01.12.20 to 01.Dec.2020).
+        """
     def __init__(self):
         self.contacts: List[Contact] = []
 
     def add_contact(self) -> None:
+        """
+        Adds a new contact to the address book based on user input.
+        """
+        # Collect and validate the first_name
         while True:
             first_name = input("Enter your first name: ").title()
             if self.valid_name(first_name):
                 break
-            print("This field can't be empty and must include only letters at least two and '-'.")
+            print("This field can't be empty and can include only letters at least two and '-'.")
             continue
-        while True:
-            last_name = input("Enter your last name: ").capitalize()
-            if self.valid_name(last_name):
-                break
-            print("This field can't be empty and must include only letters at least two and '-'.")
-            continue
+        # Collect and validate the middle_name
         while True:
             middle_name = input("Enter your middle name: ").capitalize()
             if middle_name:
                 if self.valid_name(middle_name):
                     break
-                print("This field can be empty or must include only letters at least two and '-'.")
+                print("This field can be empty or can include only letters at least two and '-'.")
                 continue
             break
+        # Collect and validate the last_name
+        while True:
+            last_name = input("Enter your last name: ").capitalize()
+            if self.valid_name(last_name):
+                break
+            print("This field can't be empty and can include only letters at least two and '-'.")
+            continue
+        # Collect and validate the birthdate
         while True:
             try:
-                input_date = input("Enter a date in the format DD.MM.YY (e.g., 01.12.20): ")
+                input_date = input("Enter your birthday in the format DD.MM.YY (e.g., 01.12.20): ")
                 birthday = self.convert_date_format(input_date)
             except ValueError:
                 print("Invalid input! Please enter a date in the correct format.")
                 continue
             else:
                 break
+        # Collect and validate the telephone number
         while True:
             tel_number = input("Enter your telephone number: ").replace(" ", "").replace("-", "")
             if self.valid_tel_number(tel_number):
@@ -51,6 +82,7 @@ class AddressBook:
             else:
                 print("Invalid telephone number.")
                 continue
+        # Collect and validate the email address
         while True:
             email = input("Enter your email address: ")
             if self.valid_email(email):
@@ -60,11 +92,15 @@ class AddressBook:
                 break
             print("Invalid email.")
             continue
+        # Create a new contact object and add it to the address book
         my_contact = Contact(first_name, middle_name, last_name, birthday, tel_number, email)
         self.contacts.append(my_contact)
         print("Contact was successfully added.")
 
     def search_contact(self) -> None:
+        """
+        Searches for a contact based on the user's search criteria (name, telephone number, email, or birthday).
+        """
         while True:
             criteria = input("Enter search criteria: 1 for name, 2 for telephone_number, 3 for email, 4 for birthday,"
                              " 0 to exit: ")
@@ -136,6 +172,9 @@ class AddressBook:
                 break
 
     def delete_contact(self) -> None:
+        """
+        Deletes a contact from the address book based on the user's input (telephone number or email address).
+        """
         print("In order to delete contact you must enter either telephone number or email address: ")
         criteria = input("Enter criteria: 1 for telephone_number, 2 for email.")
         if "1" == criteria.strip():
@@ -168,8 +207,13 @@ class AddressBook:
                     print("The contact was deleted successfully.")
                 if warning.strip().lower() == "no":
                     print("The contact is not deleted.'")
+        else:
+            print("You must enter one number from the list.")
 
     def update_contact(self) -> None:
+        """
+        Updates a contact's telephone number or email address based on the user's input.
+        """
         print("In order to update contact you must enter telephone number or email address: ")
         criteria = input("Enter criteria: 1 for telephone_number, 2 for email.")
         if "1" == criteria.strip():
@@ -231,6 +275,9 @@ class AddressBook:
 
     @staticmethod
     def valid_tel_number(tel_number: str) -> bool:
+        """
+        Validates the telephone number format for Armenian numbers.
+        """
         valid_oper = ["93", "94", "98", "91", "43", "11"]
         if tel_number.isdigit() and (tel_number[0] == "0" and tel_number[1:3] in valid_oper and len(tel_number[3:]) == 6) or \
                 (tel_number[0:3] == "374" and tel_number[3:5] in valid_oper and len(tel_number[5:]) == 6):
@@ -239,11 +286,17 @@ class AddressBook:
 
     @staticmethod
     def valid_email(email: str) -> bool:
+        """
+        Validates the email address using a regular expression pattern.
+        """
         pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         return match(pattern, email) is not None
 
     @staticmethod
     def valid_name(name: str) -> bool:
+        """
+        Validates the name to include only letters, spaces, and hyphens with a minimum length of 2 characters.
+        """
         min_length = 2
         max_length = 50
         allowed_characters = r"^[A-Za-z -]+$"
@@ -255,8 +308,11 @@ class AddressBook:
 
     @staticmethod
     def convert_date_format(input_date: str) -> str:
+        """
+        Converts the date format from DD.MM.YY to DD.b.YYYY (e.g., 01.12.20 to 01.Dec.2020).
+        """
         date = datetime.strptime(input_date, "%d.%m.%y")
-        if int(str(date.year)[-2:]) > int(str(datetime.now().year)[-2:]):
+        if date.year > datetime.now().year:
             date = date.replace(year=date.year - 100)
         result = date.strftime("%d.%b.%Y")
         return result

@@ -1,4 +1,7 @@
 class Contact:
+    """
+        A class representing a contact in an address book.
+    """
     def __init__(self, first_name: str = "", middle_name: str = "", last_name: str = "", birthday: str = "",
                  tel_number: str = "", email: str = "") -> None:
         self._first_name = first_name
