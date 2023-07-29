@@ -106,3 +106,5 @@ class Address_Book:
             
             print(f"parametr  - {self.contacts[contact.phone_number].birthday} - update  -{update_parametr}")
             self.contacts[contact.phone_number].birthday = update_parametr
+            
+

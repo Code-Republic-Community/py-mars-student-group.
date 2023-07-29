@@ -1,12 +1,11 @@
 from address_book import Address_Book
 import utils
+import file_handler
 address_book = Address_Book()
-
-address_book.add_contact("Bob","098514926","bob@mail.com","19-03-1996")
-address_book.add_contact("Stiv","077777777","stiv@mail.com","24-10-1999")
 
 def main():
     while True:
+        print("-----------------------------")
         print("Enter opration")
         print("1) Add contact")
         print("2) Delete contact ")
@@ -14,6 +13,9 @@ def main():
         print("4) Search contact")
         print("5) Creat address book json file")
         print("6) load address book file")
+        print("0) Exit")
+        print("-----------------------------")
+        
         sel = int(input())
         
         if sel == 1:
@@ -58,6 +60,7 @@ def main():
                     
                 else:
                     address_book.contacts.pop(i)
+                    print("Сontact deleted")
                     break
                 
         elif sel == 3:
@@ -155,7 +158,27 @@ def main():
                         
                         
         elif sel == 5:
-            pass
-                
+            file_name = input(("enter a name for the file - "))
+            file_handler.create_address_book(address_book,file_name)
+            
+            
+        
+            
+        elif sel == 6:
+            
+            address_book = file_handler.read_address_book()
+            print("Address book generated") 
+        
+        elif sel == 0:
+            break
+        
+        
+        else:
+            print("select again")
+            
+        
 if __name__ == "__main__":
     main() 
+    
+    
+    
