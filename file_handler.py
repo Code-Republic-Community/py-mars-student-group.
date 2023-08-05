@@ -1,4 +1,5 @@
-
+import json
+from contact import Contact
 def save_to_file(address_book, filename):
     data = {
         "Contacts": [contact.contact_dict for contact in address_book.contacts]
