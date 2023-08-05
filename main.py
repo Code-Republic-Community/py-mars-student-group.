@@ -1,8 +1,8 @@
 from AddressBook import utils
-from AddressBook import contact
+
 from AddressBook.address_book import Address_Book
 
-from AddressBook import utils
+
 from AddressBook import file_handler
 
 
