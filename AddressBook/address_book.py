@@ -1,5 +1,5 @@
-from contact import Contact
-from parameter_search import parameter_search
+from AddressBook.contact import Contact
+from AddressBook.parameter_search import parameter_search
 
 
 class Address_Book:
