@@ -23,7 +23,7 @@ def main():
             
             while True:
                 number = utils.phone_number_input()
-                if number not in  address_book.contacts:
+                if number not in  address_book.contacts.keys():
                     
                     break
                 
