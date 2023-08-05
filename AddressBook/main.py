@@ -1,9 +1,10 @@
 from address_book import Address_Book
 import utils
 import file_handler
-address_book = Address_Book()
+
 
 def main():
+    address_book = Address_Book()
     while True:
         print("-----------------------------")
         print("Enter opration")
@@ -23,7 +24,8 @@ def main():
             
             while True:
                 number = utils.phone_number_input()
-                if number not in  address_book.contacts:
+                
+                if number not in  address_book.contacts.keys():
                     
                     break
                 
