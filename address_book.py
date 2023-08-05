@@ -1,6 +1,6 @@
-import time
-import json
 import re
+import time
+from contact import Contact
 class AddressBook:
     """Class representing an address book."""
     def __init__(self, name):
