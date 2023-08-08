@@ -65,7 +65,7 @@ def main():
                     
                 else:
                     address_book.contacts.pop(i)
-                    print("Сontact deleted")
+                    print("Contact deleted")
                     break
                 
         elif sel == 3:
