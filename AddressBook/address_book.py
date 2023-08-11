@@ -9,6 +9,9 @@ class Addressbook:
         self.contacts = []
 
     def search_contact(self, searching_word: str):
+        """
+        a function to make searches in contacts by their name,surname,telephone number,mail, address and url
+        """
         for cont in self.contacts:
             for key in cont.dict_form:
                 if searching_word.lower() in cont.dict_form[key].lower():
@@ -18,32 +21,35 @@ class Addressbook:
                 print('Nothing was found!')
 
     def add_contact(self, filename):
+        """
+        function for creating a new contact and adding it to addressbook,
+        accepting parameters,checking their validations ,creating a new contact and adding it to addressbook
+        """
         name = input('Enter a name: ')
-        mid_name = input('Enter a middle name: ')
-        surname = input('Enter a surname: ')
-        telephone = input('Enter a telephone: ')
-        mail = input('Enter a mail: ')
-        address = input('Enter an address: ')
-        url = input('Enter a url: ')
-
         if not vaildation_checkers.is_valid_name(name):
             return 'Invalid name!'
 
-        if not vaildation_checkers.is_valid_name(surname):
-            return 'Invalid surname!'
-
+        mid_name = input('Enter a middle name: ')
         if not vaildation_checkers.is_valid_name(mid_name):
             return 'Invalid middle name!'
-
+        
+        surname = input('Enter a surname: ')
+        if not vaildation_checkers.is_valid_name(surname):
+            return 'Invalid surname!'
+            
+        telephone = input('Enter a telephone: ')
         if not vaildation_checkers.is_valid_telephone(telephone):
             return 'Invalid telephone!'
 
-        if not vaildation_checkers.is_valid_address(address):
-            return 'Invalid address!'
-
+        mail = input('Enter a mail: ')
         if not vaildation_checkers.is_valid_mail(mail):
             return 'Invalid mail!'
-
+        
+        address = input('Enter an address: ')
+         if not vaildation_checkers.is_valid_address(address):
+            return 'Invalid address!'
+             
+        url = input('Enter a url: ')
         if not vaildation_checkers.is_valid_url(url):
             return 'Invalid url!'
 
@@ -54,6 +60,9 @@ class Addressbook:
         print('Contact added successfully!')
 
     def update_contact(self, filename):
+        '''
+        function for editing and changing contact information
+        '''
         if len(self.contacts) == 0:
             print('Before update a contact you must create it.')
             return
@@ -81,6 +90,9 @@ class Addressbook:
             print('No such field in contact.')
 
     def delete_contact(self, filename):
+        '''
+        deleting contact from addressbook and from contact list
+        '''
         if len(self.contacts) == 0:
             print('No contacts to delete')
             return
