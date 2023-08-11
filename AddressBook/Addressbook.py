@@ -27,7 +27,31 @@ def is_valid_mail(mail: str):
     return re.match(pattern, mail)
 
 
+class ContactDescriptor:
+
+    def __set_name__(self, owner, name):
+        self.name = name
+
+    def __get__(self, instance, owner):
+        if instance is None:
+            return self
+        if self.name not in instance.__dict__:
+            raise AttributeError(f"'{owner.__name__}' object has no attribute '{self.name}'")
+        return instance.__dict__[self.name]
+
+    def __set__(self, instance, value):
+        instance.__dict__[self.name] = value
+
+
 class Contact:
+    name = ContactDescriptor()
+    surname = ContactDescriptor()
+    mid_name = ContactDescriptor()
+    telephone = ContactDescriptor()
+    mail = ContactDescriptor()
+    address = ContactDescriptor()
+    url = ContactDescriptor()
+
     def __init__(self, name, mid_name, surname, telephone, mail, address, url):
         self.name = name
         self.mid_name = mid_name
@@ -55,31 +79,31 @@ class Addressbook:
 
     def add_contact(self, filename):
         name = input('Enter a name: ')
-        mid_name = input('Enter a middle name: ')
-        surname = input('Enter a surname: ')
-        telephone = input('Enter a telephone: ')
-        mail = input('Enter a mail: ')
-        address = input('Enter an address: ')
-        url = input('Enter a url: ')
         if not is_valid_name(name):
             return 'Invalid name!'
-        if not is_valid_name(surname):
-            return 'Invalid surname!'
+        mid_name = input('Enter a middle name: ')
         if not is_valid_name(mid_name):
             return 'Invalid middle name!'
+        surname = input('Enter a surname: ')
+        if not is_valid_name(surname):
+            return 'Invalid surname!'
+        telephone = input('Enter a telephone: ')
         if not is_valid_telephone(telephone):
             return 'Invalid telephone!'
-        if not is_valid_address(address):
-            return 'Invalid address!'
+        mail = input('Enter a mail: ')
         if not is_valid_mail(mail):
             return 'Invalid mail!'
+        address = input('Enter an address: ')
+        if not is_valid_address(address):
+            return 'Invalid address!'
+        url = input('Enter a url: ')
         if not is_valid_url(url):
             return 'Invalid url!'
         contact = Contact(name, mid_name, surname, telephone, mail, address, url)
         self.contacts.append(contact)
         with open(f'{filename}.txt', 'a') as f:
             json.dump(contact.dict_form, f)
-        print('Contact added successfully!')
+        return 'Contact added successfully!'
 
     def update_contact(self, filename):
         if len(self.contacts) == 0:
@@ -156,7 +180,7 @@ def main():
             cont = Contact('name', 'mid name', 'surname', 'address', 'mail', 'telephone', 'url')
             filename = input('Enter addressbook name:')
             try:
-                addressbook.add_contact(filename)
+                print(addressbook.add_contact(filename))
             except:
                 print("Before adding contact you must create addressbook")
         elif opt == '2':
