@@ -30,7 +30,7 @@ def main():
             cont = contact.Contact('name', 'mid name', 'surname', 'address', 'mail', 'telephone', 'url')
             filename = input('Enter addressbook name:')
             try:
-                address_book.addressbook.add_contact(filename)
+                print(address_book.addressbook.add_contact(filename))
             except:
                 print("Before adding contact you must create addressbook")
         elif opt == '2':
