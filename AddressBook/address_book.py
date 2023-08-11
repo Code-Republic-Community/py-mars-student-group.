@@ -57,7 +57,7 @@ class Addressbook:
         self.contacts.append(cont)
         file_handler.add_to_file(filename,cont.dict_form)
         file_handler.add_to_json_data(cont.dict_form)
-        print('Contact added successfully!')
+        return 'Contact added successfully!'
 
     def update_contact(self, filename):
         '''
