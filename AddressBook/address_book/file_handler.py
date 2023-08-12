@@ -1,5 +1,5 @@
 import json
-from AddressBook.address_book.contact import Contact
+from .contact import Contact
 import os
 
 

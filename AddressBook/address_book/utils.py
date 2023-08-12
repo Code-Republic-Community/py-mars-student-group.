@@ -53,6 +53,7 @@ def valid_birthday(input_date: str) -> Union[str, bool]:
         except ValueError:
             return False
 
+
 def convert_date_format(input_date: str) -> str:
     """
     Converts the date format from DD.MM.YY to DD.b.YYYY (e.g., 01.12.20 to 01.Dec.2020).
@@ -72,14 +73,5 @@ def convert_date_format(input_date: str) -> str:
 
 
 
-def ordinal(n: int) -> str:
-    """
-    Converts an integer to its ordinal representation (e.g., 1 -> "first", 2 -> "second", etc.).
-    """
-    ordinals = {
-        1: "first", 2: "second", 3: "third", 4: "fourth",
-        5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth",
-        9: "ninth"
-    }
-    return ordinals.get(n, str(n) + "th")
+
 

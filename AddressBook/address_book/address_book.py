@@ -1,6 +1,6 @@
-from AddressBook.address_book.contact import Contact
+from .contact import Contact
 from typing import Dict, Callable, Any, Union
-from AddressBook.address_book.utils import ordinal, valid_name, valid_email, valid_tel_number, valid_birthday,\
+from .utils import valid_name, valid_email, valid_tel_number, valid_birthday, \
     convert_date_format
 
 
@@ -32,10 +32,11 @@ class AddressBook:
         first_name = self._get_valid_input("Enter your first name: ", valid_name)
         middle_name = self._get_valid_input("Enter your middle name (optional): ", valid_name)
         last_name = self._get_valid_input("Enter your last name: ", valid_name)
-        birthday = self._get_valid_input("Enter your birthday in the format DD.MM.YY (e.g.,01.12.20): ", valid_birthday)
+        birthday = self._get_valid_input("Enter your birthday in the format DD.MM.YY (e.g.,01.01.20): ", valid_birthday)
 
         while True:
-            tel_number = self._get_valid_input("Enter your telephone number: ", valid_tel_number)
+            tel_number = self._get_valid_input("Enter your telephone number in the format "
+                                               "091XXXXXX or 374XXXXXXXX : ", valid_tel_number)
             if tel_number in self.contacts.keys():
                 print("The telephone number already exists.")
                 continue
@@ -76,9 +77,9 @@ class AddressBook:
             if criteria == "0":
                 break
             elif criteria == "1":
-                self.search_by_attribute("name", lambda contact: [contact.first_name.lower(),
-                                                                  contact.middle_name.lower(),
-                                                                  contact.last_name.lower()])
+                self.search_by_attribute("name", lambda contact: contact.first_name.lower() +
+                                                                 ' ' + contact.middle_name.lower() +
+                                                                 ' ' + contact.last_name.lower())
             elif criteria == "2":
                 self.search_by_telephone_number()
             elif criteria == "3":
@@ -101,12 +102,8 @@ class AddressBook:
                 searched_value = convert_date_format(searched_value).lower()
             except ValueError:
                 print("Invalid input! Please enter a date in the correct format: DD.MM.YY (e.g., 01.12.20).")
-        if attribute_name == "name":
-            matching_contacts = [contact for contact in self.contacts.values()
+        matching_contacts = [contact for contact in self.contacts.values()
                                  if searched_value in attribute_getter(contact)]
-        else:
-            matching_contacts = [contact for contact in self.contacts.values()
-                                 if searched_value == attribute_getter(contact)]
         if not matching_contacts:
             print(f"There is no contact with the {attribute_name} '{searched_value}' in the contacts.")
         else:
@@ -120,28 +117,19 @@ class AddressBook:
         """
         Searches for a contact by telephone number.
         """
-        number = ""
-        for loop_count in range(1, 10):
-            digit = input(
-                f"Enter the {ordinal(loop_count)} digit of the telephone number you are looking for: ").strip()
-            if not digit.isdigit() or len(digit) > 1:
-                print("Enter one digit.")
-                return
-            number += digit
-            matching_contacts = [contact for contact in self.contacts.values() if contact.tel_number.startswith(number)]
-            if not matching_contacts:
-                print("No matches.")
-                return
-            else:
-                for contact in matching_contacts:
-                    if loop_count < 9:
-                        print(f"Possible match: {contact.tel_number[:loop_count]}{(9 - loop_count) * 'X'}\n")
-                    if loop_count == 9:
-                        print("Search results are:")
-                        print(
-                            f"name: {(contact.first_name + ' ' + contact.middle_name + ' ' + contact.last_name)}, "
-                            f"birthday: {contact.birthday}, telephone number: {contact.tel_number}, "
-                            f"email: {contact.email}\n")
+        number = input("Enter tel number: ")
+        number = number[0:3].replace("374", "0") + number[3:]
+        matching_contacts = [contact for contact in self.contacts.values() if contact.tel_number.startswith(number)]
+        if not matching_contacts:
+            print("No matches.")
+            return
+        else:
+            for contact in matching_contacts:
+                print("Search results are:")
+                print(
+                    f"name: {(contact.first_name + ' ' + contact.middle_name + ' ' + contact.last_name)}, "
+                    f"birthday: {contact.birthday}, telephone number: {contact.tel_number}, "
+                    f"email: {contact.email}\n")
 
     def delete_contact(self) -> None:
         """
@@ -219,11 +207,3 @@ class AddressBook:
                     contact.birthday = birthday
                 else:
                     print("Invalid search criteria. Please enter a valid option.")
-
-
-
-
-
-
-
-

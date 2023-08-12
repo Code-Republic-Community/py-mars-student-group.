@@ -1,6 +1,8 @@
 import unittest
-from AddressBook.address_book.contact import Contact
-from AddressBook.address_book.address_book import AddressBook
+import sys
+
+from ..address_book.contact import Contact
+from ..address_book.address_book import AddressBook
 from unittest.mock import patch
 import io
 
