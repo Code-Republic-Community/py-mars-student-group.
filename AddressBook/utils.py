@@ -1,5 +1,6 @@
 from regex import match
 
+
 def is_valid_date(date:str):
     """ Date format "Day-Month-Year" """
     # Defining a template for a date in the "day-month-year" format
@@ -48,9 +49,12 @@ def is_valid_email(email:str):
 
 
 def name_inpit():
+    min_lenght_name = 2
     while True:
-        name  = input("Enter name (count char > 1) -  ")
-        if (len(name) < 2 ):
+        name  = input("Enter name (or ' exit ', to exit) (count char > 1) -  ")
+        if name == "exit":
+            return None
+        if (len(name) < min_lenght_name ):
             print("Enter agin")
         
         else:
@@ -59,7 +63,9 @@ def name_inpit():
 
 def phone_number_input():
     while True:
-        number = input("Enter Phone number (e.g. 0XXXXXXXXX) -")
+        number = input("Enter Phone number (or ' exit ', to exit) (e.g. 0XXXXXXXXX) -")
+        if number == "exit":
+            return None
         if not is_valid_number(number):
             print("Enter agin")
         
@@ -69,8 +75,9 @@ def phone_number_input():
 
 def email_input():
     while True:
-        email = input("Enter email( e.g. name@gmail.com) - ")
-        
+        email = input("Enter email (or ' exit ', to exit) ( e.g. name@gmail.com) - ")
+        if email == "exit":
+            return None
         if not is_valid_email(email):
             print("Enter agin")
         else:
@@ -79,7 +86,9 @@ def email_input():
 
 def birthday_input():
     while True:
-        birthday = input("Enter birthday (e.g. dd-mm-year)")
+        birthday = input("Enter birthday (or ' exit ', to exit) (e.g. dd-mm-year)")
+        if birthday == "exit":
+            return None
         if not is_valid_date(birthday):
             print("enter agin")
         
@@ -94,8 +103,11 @@ def selectin(sels):
         print(f"{index})   {i}")
         index += 1
     
-    while True:    
-        sel = int(input("Choose index - "))
+    while True:
+        sel = input("Choose index - (or ' exit ', to exit) ")
+        if sel == "exit":
+            return None
+        sel = int(sel)
         
         if sel<1 or sel > len(sels):
             print("Choose agin")

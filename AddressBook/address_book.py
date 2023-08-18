@@ -1,3 +1,4 @@
+import readchar
 from AddressBook.contact import Contact
 from AddressBook.parameter_search import parameter_search
 
@@ -33,19 +34,24 @@ class Address_Book:
         
     
         
-    def search_contact(self,type_parametr,parametr):
+    def search_contact(self,type_parametr):
         if type_parametr == "name":
-            found_contacts = []
-            for i in self.contacts.values():
-                if i.name == parametr:
-                    found_contacts.append(i)
-            
-            if len(found_contacts) == 0:
-                return None
-            else:
-                return found_contacts
-            
-                                
+            user_input = ''     
+            while True:
+                print(" enter ' ! ' to exit ")
+                char = readchar.readchar()
+                if char == "!":
+                    break
+
+                
+                user_input += char
+                print(f"you have entered - {user_input}")
+                
+                for contact in self.contacts.values():
+                    if user_input in contact.name:
+                        print(contact)
+                    
+                         
             
         elif type_parametr == "phone_number":
             phone_numbers = []
@@ -76,15 +82,20 @@ class Address_Book:
         
         
         elif type_parametr == "birthday":
-            found_contacts = []
-            for i in self.contacts.values():
-                if i.birthday == parametr:
-                    found_contacts.append(i)
-            
-            if len(found_contacts) == 0:
-                return None
-            else:
-                return found_contacts
+            user_input = ''     
+            while True:
+                print(" enter ' ! ' to exit ")
+                char = readchar.readchar()
+                if char == "!":
+                    break
+
+                
+                user_input += char
+                print(f"you have entered - {user_input}")
+                
+                for contact in self.contacts.values():
+                    if user_input in contact.birthday:
+                        print(contact)
         
         
     def update_contact(self,contact,update_parametr_type,update_parametr):

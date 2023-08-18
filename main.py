@@ -9,6 +9,7 @@ from AddressBook import file_handler
 
 def main():
     address_book = Address_Book()
+    
     while True:
         print("-----------------------------")
         print("Enter opration")
@@ -18,25 +19,42 @@ def main():
         print("4) Search contact")
         print("5) Creat address book json file")
         print("6) load address book file")
+        print("7) Delete address book file")
+        print("8) Show all contacts")
+        print("9) Inserting a document DB ")
+        print("10)Import address book from DB")
         print("0) Exit")
         print("-----------------------------")
         
-        sel = int(input())
+        sel = input(": - ")
         
-        if sel == 1:
+        if sel == "1":
             name = utils.name_inpit()
+            if name == None:
+                    continue
+                
+            
             
             while True:
                 number = utils.phone_number_input()
+                
+                
+                
                 if number not in  address_book.contacts:
                     
                     break
                 
                 print("the number already exists")
-                
+            
+            if number == None:
+                    continue
+            
             while True:
                 
                 email = utils.email_input()
+                
+                
+                
                 j = 0
                 for i in address_book.contacts.values():
                     if email == i.email_address:
@@ -45,94 +63,126 @@ def main():
                     print("email already exists")
                 else:
                     break
-                
+            
+            if email == None:
+                    continue
                 
             birthday = utils.birthday_input()
+            if birthday == None:
+                    continue
 
             address_book.add_contact(name,number,email,birthday)
         
-        elif sel == 2:
+        elif sel == "2":
             while True:
                 
+                if len(address_book.contacts) == 0:
+                    
+                    print("address book empty")
+                    break
+            
+                contact_list = []
+                j = 0
                 for contact in address_book.contacts.values():
-                    print(f"name-{contact.name} phone number -{contact.phone_number} email - {contact.email_address} birthday - {contact.birthday}  ")
+                    contact_list.append(contact.phone_number)
+                    print(j," - ",contact)
+                    j +=1
+                    
                 
-                i = input("Enter contact phone nuber for delete")
-
-                if  i not in address_book.contacts:
+                i = input("Enter contact  to delete (or ' exit ', to exit): ")
+                
+                if i == "exit":
+                    break
+                
+                i = int(i)
+                
+                if  j<i<0:
                     
                     print("Number not fond")
                     
                 else:
-                    address_book.contacts.pop(i)
+                    print(address_book.contacts.pop(contact_list[i]))
                     print("Contact deleted")
                     break
                 
-        elif sel == 3:
+        elif sel == "3":
             while True:
                 
+                if len(address_book.contacts) == 0:
+                    
+                    print("address book empty")
+                    break
+            
+                contact_list = []
+                j = 0
                 for contact in address_book.contacts.values():
-                    print(f"name-{contact.name} phone number -{contact.phone_number} email - {contact.email_address} birthday - {contact.birthday}  ")
+                    contact_list.append(contact.phone_number)
+                    print(j," - ",contact)
+                    j +=1
+                    
                 
-                i = input("Enter contact phone nuber for update")
-
-                if  i not in address_book.contacts:
+                i = input("Enter contact  to update (or ' exit ', to exit): ")
+                
+                if i == "exit":
+                    break
+                
+                i = int(i)
+                
+                if  j<i<0:
                     
                     print("Number not fond")
                     
                 else:
-                    update_contact = address_book.contacts[i]
+                    update_contact = address_book.contacts[contact_list[i]]
                     
                     choose_list =["name","phone_number","email_address","birthday"]
                     update_parametr = utils.selectin(choose_list)
+                    if update_parametr == None:
+                        break
                     
                     if update_parametr == "name":
                         new_name = utils.name_inpit()
-                        
+                        if new_name == None:
+                            break
                         
                         address_book.update_contact(update_contact,update_parametr,new_name)
                         
                     elif update_parametr == "phone_number":
                         new_phone_number = utils.phone_number_input()
+                        if new_phone_number == None:
+                            break
                         
                         address_book.update_contact(update_contact,update_parametr,new_phone_number)
                         
                     elif update_parametr == "email_address":
                         new_email_address = utils.email_input()
-                        
+                        if new_email_address == None:
+                            break
                         address_book.update_contact(update_contact,update_parametr,new_email_address)
                     
                     elif update_parametr == "birthday":
                         new_birthday = utils.birthday_input()
-                        
+                        if new_birthday == None:
+                            break
                         address_book.update_contact(update_contact,update_parametr,new_birthday)
                     
                         
                     
                     break
         
-        elif sel == 4:
+        elif sel == "4":
             
             choose_list =["name","phone_number","email_address","birthday"]
-            search_parametr = utils.selectin(choose_list)  
-            if search_parametr == "name":
-                  
-                name  = utils.name_inpit()
-                  
-                found_contacts = address_book.search_contact(search_parametr,name)
-                if found_contacts == None:
-                    print("Contacts not found")
-                elif len (found_contacts) == 1:
-                    print("contact found ")
-                    print(found_contacts[0])
-                else:
-                    print(f"{len(found_contacts)} - contact found")
-                    for i in found_contacts:
-                        print(i)
+            search_parametr = utils.selectin(choose_list)
+              
+            if search_parametr == "name" or search_parametr == "birthday":
+                
+                address_book.search_contact(search_parametr)
+                
             
             elif search_parametr == "phone_number":
                 
-                found_nuber = address_book.search_contact(search_parametr,None)
+                found_nuber = address_book.search_contact(search_parametr)
                 if found_nuber == None:
                     print("Nuber not found")
                 else:
@@ -147,43 +197,59 @@ def main():
                     print("contact found")
                     print(found_email)
             
-            elif search_parametr == "birthday":
-                birthday  = utils.birthday_input()
-                  
-                found_contacts = address_book.search_contact(search_parametr,birthday)
-                if found_contacts == None:
-                    print("Contacts not found")
-                elif len (found_contacts) == 1:
-                    print("contact found ")
-                    print(found_contacts[0])
-                else:
-                    print(f"{len(found_contacts)} - contact found")
-                    for i in found_contacts:
-                        print(i)
+            
                         
                         
-        elif sel == 5:
-            file_name = input(("enter a name for the file - "))
+        elif sel == "5":
+            file_name = input(("enter a name for the file (or ' exit ', to exit): - "))
+            
+            if file_name == "exit":
+                continue
+            
+            
             file_handler.create_address_book(address_book,file_name)
             
             
         
             
-        elif sel == 6:
+        elif sel == "6":
             
-            address_book = file_handler.read_address_book()
+            new_address_book = file_handler.read_address_book()
+            if new_address_book == None:
+                break
+            
+            address_book = new_address_book
+            
             print("Address book generated") 
         
-        elif sel == 0:
-            break
         
+        elif sel == "7":
+            file_handler.delete_address_book()
+            print("Address book deleted")
+            
+        
+        elif sel == "8":
+            for contact in address_book.contacts.values():
+                print(contact)
+            
+        elif sel == "9":
+            file_handler.add_addressBook_DB(address_book)
+            
+        elif sel == "10":
+            address_book = file_handler.import_address_book()
+            
+        
+        elif sel == "0":
+            break
         
         else:
             print("select again")
             
+    
         
 if __name__ == "__main__":
     main() 
     
     
-    
+
+

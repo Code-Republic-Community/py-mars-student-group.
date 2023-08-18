@@ -111,5 +111,5 @@ class Contact:
         
         
     def __str__(self) -> str:
-        return f"Name - {self.name}, phone_number - {self.phone_number}, email_address - {self.email_address}, birthday -{self.birthday}"
+        return f"Name - {self.name}, phone_number - {self.phone_number}, email_address - {self.email_address}, birthday -  {self.birthday}"
 
