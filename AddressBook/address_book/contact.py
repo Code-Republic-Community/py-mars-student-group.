@@ -1,4 +1,4 @@
-from .utils import valid_name, valid_email, valid_tel_number, valid_birthday,\
+from address_book.utils import valid_name, valid_email, valid_tel_number, valid_birthday,\
      convert_date_format
 
 

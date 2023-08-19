@@ -1,8 +1,8 @@
-from .contact import Contact
+from address_book.contact import Contact
 from typing import Dict, Callable, Any, Union
-from .utils import valid_name, valid_email, valid_tel_number, valid_birthday, \
+from address_book.utils import valid_name, valid_email, valid_tel_number, valid_birthday, \
     convert_date_format
-from .file_handler import MongoDBHandler
+from address_book.file_handler import MongoDBHandler
 
 
 class AddressBook:

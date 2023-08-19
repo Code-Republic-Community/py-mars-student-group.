@@ -41,18 +41,18 @@ def main():
             continue
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
 
-from pymongo import MongoClient
-client = MongoClient('mongodb://localhost:27017/')
-db = client['mydatabase']
-collection = db['address_book']
-for document in collection.find():
-    document.pop("_id")
-    print(document)
-
-client.close()
+# from pymongo import MongoClient
+# client = MongoClient('mongodb://localhost:27017/')
+# db = client['mydatabase']
+# collection = db['address_book']
+# for document in collection.find():
+#     document.pop("_id")
+#     print(document)
+#
+# client.close()
 
 
 

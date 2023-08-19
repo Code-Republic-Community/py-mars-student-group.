@@ -1,6 +1,6 @@
 import json
 from pymongo import MongoClient
-from .contact import Contact
+from address_book.contact import Contact
 import os
 
 
