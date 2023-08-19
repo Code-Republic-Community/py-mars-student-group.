@@ -2,6 +2,7 @@ from .contact import Contact
 from typing import Dict, Callable, Any, Union
 from .utils import valid_name, valid_email, valid_tel_number, valid_birthday, \
     convert_date_format
+from .file_handler import MongoDBHandler
 
 
 class AddressBook:
@@ -24,6 +25,7 @@ class AddressBook:
 
     def __init__(self):
         self.contacts: Dict[str, Contact] = {}
+        self.db_handler = MongoDBHandler(database_name='mydatabase', collection_name='address_book')
 
     def add_contact(self) -> None:
         """
@@ -49,6 +51,7 @@ class AddressBook:
             break
         contact = Contact(first_name, middle_name, last_name, birthday, tel_number, email)
         self.contacts[contact.tel_number] = contact
+        self.db_handler.save_contact(contact)
         print("Contact was added successfully!")
 
     @staticmethod
@@ -141,6 +144,8 @@ class AddressBook:
             warning = input("Are you sure about deleting the contact? Enter yes or no: ").strip().lower()
             if warning == "yes":
                 self.contacts.pop(contact.tel_number)
+                self.db_handler.delete_contact_from_db(contact.tel_number)
+
                 print("The contact was deleted successfully.")
             elif warning == "no":
                 print("The contact is not deleted.")
@@ -207,3 +212,5 @@ class AddressBook:
                     contact.birthday = birthday
                 else:
                     print("Invalid search criteria. Please enter a valid option.")
+
+            self.db_handler.change_contact(contact)
